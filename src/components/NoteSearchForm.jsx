@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 export default class NoteSearhForm extends React.Component {
     constructor(props) {
@@ -36,3 +37,8 @@ export default class NoteSearhForm extends React.Component {
         );
     }
 }
+
+NoteSearhForm.propTypes = {
+    searchNote: PropTypes.func.isRequired,
+    isArchive: PropTypes.bool.isRequired
+};

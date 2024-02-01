@@ -1,6 +1,7 @@
 import React from "react";
 import { addNote } from "../data/notes";
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export default function AddPageWrapper() {
     const navigate = useNavigate();
@@ -59,6 +60,7 @@ class AddPage extends React.Component {
     render() {
         return (
             <form className="note-add-form" onSubmit={this.onSubmitHandler}>
+                <h2>Tambah Catatan</h2>
                 <p>Sisa karakter: {this.state.charTotal}</p>
                 <input type="text" placeholder="Judul catatan" value={this.state.title} onChange={this.onTitleChangeHandler} />
                 <textarea rows="5" placeholder="Isi catatan" value={this.state.body} onChange={this.onBodyChangeHandler}></textarea>
@@ -67,3 +69,7 @@ class AddPage extends React.Component {
         );
     }
 }
+
+AddPage.propTypes = {
+    navigate: PropTypes.func.isRequired
+};

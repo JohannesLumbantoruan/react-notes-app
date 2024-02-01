@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import formatDate from "../utils/formatDate";
 import ArchiveNote from "./ArchiveNote";
 import DeleteNote from "./DeleteNote";
+import PropTypes from 'prop-types';
 
 export default function NoteItem({ note, deleteNote, archiveNote, isArchive }) {
     return (
@@ -20,3 +21,10 @@ export default function NoteItem({ note, deleteNote, archiveNote, isArchive }) {
         </div>
     );
 }
+
+NoteItem.propTypes = {
+    note: PropTypes.object.isRequired,
+    deleteNote: PropTypes.func.isRequired,
+    archiveNote: PropTypes.func.isRequired,
+    isArchive: PropTypes.bool.isRequired
+};

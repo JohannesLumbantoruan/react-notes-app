@@ -5,6 +5,7 @@ import ArchivesPage from "../pages/ArchivesPage";
 import Navigation from "./Navigation";
 import AddPage from "../pages/AddPage";
 import DetailPage from "../pages/DetailPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 export default class NoteApp extends React.Component {
     render() {
@@ -19,6 +20,7 @@ export default class NoteApp extends React.Component {
                         <Route path="/archives" element={<ArchivesPage />} />
                         <Route path="/notes/add" element={<AddPage />} />
                         <Route path="/notes/:id" element={<DetailPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </main>
             </div>

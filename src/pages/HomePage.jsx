@@ -3,6 +3,7 @@ import NoteList from "../components/NoteList";
 import NoteSearhForm from "../components/NoteSearchForm";
 import { archiveNote, deleteNote, getNotes } from "../data/notes";
 import { useSearchParams } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export default function HomePageWrapper() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +34,10 @@ class HomePage extends React.Component {
     onDeleteNoteHandler(id) {
         deleteNote(id);
 
-        this.setState({ notes: getNotes() });
+        this.setState({
+            notes: getNotes(),
+            query: ''
+        });
     }
 
     onQueryChangeHandler(query) {
@@ -59,3 +63,8 @@ class HomePage extends React.Component {
         );
     }
 }
+
+HomePage.propTypes = {
+    query: PropTypes.string.isRequired,
+    queryChange: PropTypes.func.isRequired
+};

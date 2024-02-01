@@ -3,6 +3,7 @@ import { deleteNote, getArchivedNotes, unArchiveNote } from "../data/notes";
 import NoteSearhForm from "../components/NoteSearchForm";
 import NoteList from "../components/NoteList";
 import { useSearchParams } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export default function ArchivesPageWrapper() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,7 +40,10 @@ class ArchivesPage extends React.Component {
     onDeleteNoteHandler(id) {
         deleteNote(id);
 
-        this.setState({ notes: getArchivedNotes() });
+        this.setState({
+            notes: getArchivedNotes(),
+            query: ''
+        });
     }
 
     onArchiveNoteHandler(id) {
@@ -59,3 +63,8 @@ class ArchivesPage extends React.Component {
         );
     }
 }
+
+ArchivesPage.propTypes = {
+    query: PropTypes.string.isRequired,
+    changeQuery: PropTypes.func.isRequired
+};

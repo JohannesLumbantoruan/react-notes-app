@@ -30,6 +30,11 @@ a {
     }
 }
 
+.not-found {
+    text-align: center;
+    margin-block: 20px;
+}
+
 .note-app {
     width: 80%;
     margin-inline: auto;
@@ -41,12 +46,20 @@ a {
         justify-content: space-between;
         padding: 5px 10px;
 
+        #hamburger-button {
+            display: none;
+        }
+
         ul {
             padding: 10px;
             li {
                 list-style-type: none;
                 display: inline-block;
                 margin-left: 10px;
+
+                &:first-child {
+                    display: none;
+                }
 
                 a {
                     text-decoration: none;
@@ -162,6 +175,10 @@ a {
     p {
         text-align: right;
     }
+
+    h2 {
+        text-align: center;
+    }
 }
 
 .note-search-form {
@@ -198,10 +215,50 @@ a {
     .note-add-form {
         width: 90%;
     }
+
+    .note-item.note-detail {
+        width: 70%;
+    }
 }
 
 @media screen and (max-width: 400px) {
     .note-items {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .note-item.note-detail {
+        width: 100%;
+    }
+
+    .note-app {
+        nav {
+            #hamburger-button {
+                display: block;
+                background-color: transparent;
+                border: none;
+                color: #fff;
+                font-size: 20px;
+            }
+    
+            ul {
+                display: none;
+                position: fixed;
+                width: 100vw;
+                background-color: #18181b;
+                top: 0;
+                left: 0;
+                border-bottom: solid #fff;
+
+                li {
+                    display: block;
+                    width: fit-content;
+                    margin-inline: auto;
+
+                    &:first-child {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
     }
 }

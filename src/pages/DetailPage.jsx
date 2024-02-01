@@ -4,6 +4,7 @@ import { archiveNote, deleteNote, getNote, unArchiveNote } from '../data/notes';
 import formatDate from "../utils/formatDate";
 import DeleteNote from "../components/DeleteNote";
 import ArchiveNote from "../components/ArchiveNote";
+import PropTypes from 'prop-types';
 
 export default function DetailPageWrapper() {
     const { id } = useParams();
@@ -61,4 +62,9 @@ class DetailPage extends React.Component {
         </div>
         )
     }
+}
+
+DetailPage.propTypes = {
+    navigate: PropTypes.func.isRequired,
+    noteId: PropTypes.string.isRequired
 }

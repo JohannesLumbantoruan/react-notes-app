@@ -1,4 +1,5 @@
 import NoteItem from './NoteItem';
+import PropTypes from 'prop-types';
 
 export default function NoteList({ notes, deleteNote, archiveNote, isArchive }) {
     return (
@@ -20,3 +21,10 @@ export default function NoteList({ notes, deleteNote, archiveNote, isArchive }) 
         </div>
     );
 }
+
+NoteList.propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    deleteNote: PropTypes.func.isRequired,
+    archiveNote: PropTypes.func.isRequired,
+    isArchive: PropTypes.bool.isRequired
+};
