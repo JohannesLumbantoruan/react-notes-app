@@ -38,9 +38,15 @@ class DetailPage extends React.Component {
     }
 
     onDeleteHandler(id) {
+        const { note } = this.state;
+
         deleteNote(id);
 
-        this.props.navigate('/');
+        if (note.archived) {
+            this.props.navigate('/archives');
+        } else {
+            this.props.navigate('/');
+        }
     }
 
     render() {

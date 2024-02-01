@@ -49,7 +49,10 @@ class HomePage extends React.Component {
     onArchiveNoteHandler(id) {
         archiveNote(id);
 
-        this.setState({ notes: getNotes() });
+        this.setState({
+            notes: getNotes(),
+            query: ''
+        });
     }
 
     render() {

@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import ArchivesPage from "../pages/ArchivesPage";
-import Navigation from "./Navigation";
-import AddPage from "../pages/AddPage";
-import DetailPage from "../pages/DetailPage";
-import NotFoundPage from "../pages/NotFoundPage";
+import HomePage from "./pages/HomePage";
+import ArchivesPage from "./pages/ArchivesPage";
+import Navigation from "./components/Navigation";
+import AddPage from "./pages/AddPage";
+import DetailPage from "./pages/DetailPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default class NoteApp extends React.Component {
     render() {

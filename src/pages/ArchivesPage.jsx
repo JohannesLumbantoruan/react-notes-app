@@ -49,7 +49,10 @@ class ArchivesPage extends React.Component {
     onArchiveNoteHandler(id) {
         unArchiveNote(id);
 
-        this.setState({ notes: getArchivedNotes() });
+        this.setState({
+            notes: getArchivedNotes(),
+            query: ''
+        });
     }
 
     render() {
