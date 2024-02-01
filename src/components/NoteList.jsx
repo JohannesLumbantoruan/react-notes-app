@@ -13,7 +13,7 @@ export default function NoteList({ notes, deleteNote, archiveNote, isArchive }) 
             <div className="note-items">
                 {
                     notes.map((note) => (
-                        <NoteItem key={note.id} note={note} deleteNote={deleteNote} archiveNote={archiveNote} />
+                        <NoteItem key={note.id} note={note} deleteNote={deleteNote} archiveNote={archiveNote} isArchive={isArchive} />
                     ))
                 }
             </div>

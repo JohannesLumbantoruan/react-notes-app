@@ -51,6 +51,10 @@ function getArchivedNotes() {
     return notes.filter((note) => note.archived);
 }
 
+function getNote(id) {
+    return notes.filter((note) => note.id === id)[0];
+}
+
 function addNote(note) {
     notes = [
         {
@@ -93,5 +97,6 @@ export {
     addNote,
     deleteNote,
     archiveNote,
-    unArchiveNote
+    unArchiveNote,
+    getNote
 };

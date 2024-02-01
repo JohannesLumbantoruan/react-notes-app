@@ -21,6 +21,15 @@
     color: #000 !important;
 }
 
+a {
+    text-decoration: none;
+    color: #fff;
+
+    &:hover {
+        color: #e0e0e0;
+    }
+}
+
 .note-app {
     width: 80%;
     margin-inline: auto;
@@ -75,6 +84,12 @@
     justify-content: space-between;
     border: solid #fff;
 
+    &.note-detail {
+        width: 50%;
+        margin-inline: auto;
+        margin-block: 20px;
+    }
+
     .note-item__content {
         padding: 10px 10px;
 
@@ -116,8 +131,8 @@
 
 .note-add-form {
     border: solid #fff;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 20px;
+    margin-top: 20px;
     width: 60%;
     margin-inline: auto;
 

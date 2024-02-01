@@ -1,6 +1,6 @@
-export default function ArchiveNote({ id, archiveNote, showArchives }) {
+export default function ArchiveNote({ id, archiveNote, isArchive }) {
     return (
-        showArchives ?
+        isArchive ?
             <button onClick={() => archiveNote(id)}>Kembalikan</button>
         :
             <button onClick={() => archiveNote(id)}>Arsipkan</button>
