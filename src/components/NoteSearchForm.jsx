@@ -26,11 +26,11 @@ export default class NoteSearhForm extends React.Component {
     }
 
     render() {
-        const { showArchives } = this.props;
+        const { isArchive } = this.props;
 
         return (
             <form className="note-search-form" onSubmit={this.onSubmitHandler}>
-                <input type="text" placeholder={showArchives ? 'Cari arsip catatan' : 'Cari catatan'} value={this.state.query} onChange={this.onQueryChangeHandler} />
+                <input type="text" placeholder={isArchive ? 'Cari arsip catatan' : 'Cari catatan'} value={this.state.query} onChange={this.onQueryChangeHandler} />
                 <button type="submit">Cari</button>
             </form>
         );
