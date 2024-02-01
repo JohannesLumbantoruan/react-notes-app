@@ -40,5 +40,5 @@ export default class NoteSearhForm extends React.Component {
 
 NoteSearhForm.propTypes = {
     searchNote: PropTypes.func.isRequired,
-    isArchive: PropTypes.bool.isRequired
+    isArchive: PropTypes.bool
 };

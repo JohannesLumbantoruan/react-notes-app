@@ -68,6 +68,6 @@ class ArchivesPage extends React.Component {
 }
 
 ArchivesPage.propTypes = {
-    query: PropTypes.string.isRequired,
+    query: PropTypes.string,
     changeQuery: PropTypes.func.isRequired
 };

@@ -26,5 +26,5 @@ NoteItem.propTypes = {
     note: PropTypes.object.isRequired,
     deleteNote: PropTypes.func.isRequired,
     archiveNote: PropTypes.func.isRequired,
-    isArchive: PropTypes.bool.isRequired
+    isArchive: PropTypes.bool
 };

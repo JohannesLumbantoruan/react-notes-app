@@ -12,5 +12,5 @@ export default function ArchiveNote({ id, archiveNote, isArchive }) {
 ArchiveNote.propTypes = {
     id: PropTypes.number.isRequired,
     archiveNote: PropTypes.func.isRequired,
-    isArchive: PropTypes.bool.isRequired
+    isArchive: PropTypes.bool
 };

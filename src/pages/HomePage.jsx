@@ -68,6 +68,6 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-    query: PropTypes.string.isRequired,
+    query: PropTypes.string,
     queryChange: PropTypes.func.isRequired
 };
