@@ -1,48 +1,72 @@
-import { useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { archiveNote, deleteNote, getNote, unArchiveNote } from '../data/notes';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { archiveNote, deleteNote, getNote, unarchiveNote } from '../data/api';
 import formatDate from "../utils/formatDate";
 import DeleteNote from "../components/DeleteNote";
 import ArchiveNote from "../components/ArchiveNote";
 
 export default function DetailPage() {
-    const noteId = Number(useParams().id);
+    const noteId = useParams().id;
     const navigate = useNavigate();
 
-    const [note, setNote] = useState(() => getNote(noteId));
+    const [note, setNote] = useState({});
 
-    const onArchiveHandler = (id) => {
+    useEffect(() => {
+        (async () => {
+            const { error, data } = await getNote(noteId);
+
+            if (!error) {
+                setNote({ ...data });
+            }
+        })();
+    }, [noteId]);
+
+    const onArchiveHandler = async (id) => {
         if (note.archived) {
-            unArchiveNote(id);
-        } else {
-            archiveNote(id);
-        }
+            const { error } = await unarchiveNote(id);
 
-        setNote({ ...getNote(noteId) });
+            if (!error) {
+                const { error: err, data } = await getNote(noteId)
+
+                if (!err) {
+                    setNote(data);
+                }
+            }
+        } else {
+            const { error } = await archiveNote(id);
+
+            if (!error) {
+                const { error: err, data } = await getNote(noteId)
+
+                if (!err) {
+                    setNote(data);
+                }
+            }
+        }
     }
 
-    const onDeleteHandler = (id) => {
-        deleteNote(id);
+    const onDeleteHandler = async (id) => {
+        const { error } = await deleteNote(id);
 
-        if (note.archived) {
-            navigate('/archives');
-        } else {
-            navigate('/');
+        if (!error) {
+            if (note.archived) {
+                navigate('/archives');
+            } else {
+                navigate('/');
+            }
         }
     }
     
     return(
         <div className="note-item note-detail">
             <div className="note-item__content">
-                <h3 className="note-title">
-                    <Link to={`/notes/${note.id}`}>{note.title}</Link>
-                </h3>
-                <p className="note-date">{formatDate(note.createdAt)}</p>
+                <h3 className="note-title">{note.title}</h3>
+                <p className="note-date">{note.createdAt && formatDate(note.createdAt)}</p>
                 <p className="note-body">{note.body}</p>
             </div>
             <div className="note-item__buttons">
-                <DeleteNote deleteNote={onDeleteHandler} id={note.id} />
-                <ArchiveNote archiveNote={onArchiveHandler} id={note.id} isArchive={note.archived} />
+                <DeleteNote deleteNote={onDeleteHandler} id={note.id || ''} />
+                <ArchiveNote archiveNote={onArchiveHandler} id={note.id || ''} isArchive={note.archived} />
             </div>
         </div>
     )

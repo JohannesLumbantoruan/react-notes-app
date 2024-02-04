@@ -10,15 +10,18 @@ export default function Navigation({ logout, name }) {
         if (window.innerWidth > 500) return;
         
         const menu = document.querySelectorAll('li a');
-        const main = document.querySelector('main');
 
-        const clickHandler = () => document.querySelector('li:first-child').click();
+        const clickHandler = (event) => {
+            event.stopPropagation();
+
+            document.querySelector('li:first-child').click()
+        };
 
         menu.forEach((el) => {
             el.addEventListener('click', clickHandler);
         });
 
-        main.addEventListener('click', clickHandler);
+        document.documentElement.addEventListener('click', clickHandler);
 
         return () => {
             menu.forEach((el) => {
