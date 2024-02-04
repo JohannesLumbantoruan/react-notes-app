@@ -16,6 +16,14 @@
     margin-block: 20px 30px;
 }
 
+svg {
+    font-size: 24px;
+
+    &.btn-close {
+        font-size: 30px;
+    }
+}
+
 .active {
     background-color: #fff !important;
     color: #000 !important;
@@ -35,6 +43,20 @@ a {
     margin-block: 20px;
 }
 
+.alert {
+    font-size: 0.8em;
+    color: #f46e8d;
+}
+
+.btn-logout {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+}
+
 .note-app {
     width: 80%;
     margin-inline: auto;
@@ -50,12 +72,21 @@ a {
             display: none;
         }
 
+        h1 {
+            font-size: 30px;
+        }
+
         ul {
             padding: 10px;
+            display: flex;
             li {
                 list-style-type: none;
                 display: inline-block;
-                margin-left: 10px;
+                margin-left: 20px;
+
+                &:nth-child(4) {
+                    margin-right: 30px;
+                }
 
                 &:first-child {
                     display: none;
@@ -196,6 +227,53 @@ a {
     }
 }
 
+.auth-page {
+    border: solid #fff;
+    width: 60%;
+    margin-inline: auto;
+    padding: 10px 20px;
+
+    h1 {
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 0.9em;
+    }
+
+    a {
+        color: rgb(127, 127, 237);
+        text-decoration: underline;
+    }
+
+    form {
+        & > * {
+            display: block;
+            padding: 5px 10px;
+            width: 100%;
+
+            &:not(button) {
+                margin-bottom: 10px;
+            }
+
+            &:nth-child(4) {
+                margin-bottom: 3px;
+            }
+
+            &:nth-child(5),
+            &:last-child {
+                padding-left: 0;
+            }
+        }
+
+        button {
+            margin-block: 20px;
+        }
+    }
+}
+
 /* Media Query */
 @media screen and (max-width: 768px) {
     .note-app {
@@ -219,6 +297,47 @@ a {
     .note-item.note-detail {
         width: 70%;
     }
+
+    .auth-page {
+        width: 100%;
+    }
+
+    .note-app {
+        nav {
+            #hamburger-button {
+                display: block;
+                background-color: transparent;
+                border: none;
+                color: #fff;
+                font-size: 28px;
+            }
+    
+            ul {
+                display: none;
+                position: fixed;
+                width: 100vw;
+                background-color: #18181b;
+                top: 0;
+                left: 0;
+                border-bottom: solid #fff;
+
+                li {
+                    display: block;
+                    width: fit-content;
+                    margin-inline: auto;
+                    margin-bottom: 10px;
+
+                    &:first-child {
+                        margin-bottom: 10px;
+                    }
+
+                    &:nth-child(4) {
+                        margin-right: auto;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -237,7 +356,7 @@ a {
                 background-color: transparent;
                 border: none;
                 color: #fff;
-                font-size: 20px;
+                font-size: 28px;
             }
     
             ul {
@@ -253,9 +372,14 @@ a {
                     display: block;
                     width: fit-content;
                     margin-inline: auto;
+                    margin-bottom: 10px;
 
                     &:first-child {
                         margin-bottom: 10px;
+                    }
+
+                    &:nth-child(4) {
+                        margin-right: auto;
                     }
                 }
             }

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import { RiInboxUnarchiveLine, RiInboxArchiveLine } from "react-icons/ri";
 
 export default function ArchiveNote({ id, archiveNote, isArchive }) {
     return (
         isArchive ?
-            <button onClick={() => archiveNote(id)}>Kembalikan</button>
+            <button onClick={() => archiveNote(id)}><RiInboxUnarchiveLine /></button>
         :
-            <button onClick={() => archiveNote(id)}>Arsipkan</button>
+            <button onClick={() => archiveNote(id)}><RiInboxArchiveLine /></button>
     );
 }
 
