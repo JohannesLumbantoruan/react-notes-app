@@ -1,75 +1,49 @@
-import React from "react";
+import { useState } from "react";
 import { addNote } from "../data/notes";
 import { useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
 
-export default function AddPageWrapper() {
+export default function AddPage() {
     const navigate = useNavigate();
 
-    return <AddPage navigate={navigate} />
-}
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [totalChar, setTotalChar] = useState(50);
 
-class AddPage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            title: '',
-            body: '',
-            charTotal: 50
-        }
-
-        this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.onTitleChangeHandler = this.onTitleChangeHandler.bind(this);
-        this.onBodyChangeHandler = this.onBodyChangeHandler.bind(this);
-    }
-
-    onTitleChangeHandler(event) {
+    const onTitleChangeHandler = (event) => {
         let title = event.target.value;
 
         if (title.length > 50) {
             title = title.slice(0, 51);
-            this.setState((prev) => ({
-                ...prev,
-                charTotal: 0
-            }));
+            setTotalChar(0);
+            setTitle(title);
         } else {
-            this.setState((prev) => ({
-                ...prev,
-                title,
-                charTotal: 50 - title.length
-            }));
+            setTotalChar(50 - title.length);
+            setTitle(title);
         }
     }
 
-    onBodyChangeHandler(event) {
-        this.setState({ body: event.target.value });
+    const onBodyChangeHandler = (event) => {
+        setBody(event.target.value);
     }
 
-    onSubmitHandler(event) {
+    const onSubmitHandler = (event) => {
         event.preventDefault();
 
         addNote({
-            title: this.state.title,
-            body: this.state.body
+            title,
+            body
         });
 
-        this.props.navigate('/');
-    }
+        navigate('/');
+    }    
 
-    render() {
-        return (
-            <form className="note-add-form" onSubmit={this.onSubmitHandler}>
-                <h2>Tambah Catatan</h2>
-                <p>Sisa karakter: {this.state.charTotal}</p>
-                <input type="text" placeholder="Judul catatan" value={this.state.title} onChange={this.onTitleChangeHandler} />
-                <textarea rows="5" placeholder="Isi catatan" value={this.state.body} onChange={this.onBodyChangeHandler}></textarea>
-                <button type="submit">Tambah</button>
-            </form>
-        );
-    }
+    return (
+        <form className="note-add-form" onSubmit={onSubmitHandler}>
+            <h2>Tambah Catatan</h2>
+            <p>Sisa karakter: {totalChar}</p>
+            <input type="text" placeholder="Judul catatan" value={title} onChange={onTitleChangeHandler} />
+            <textarea rows="5" placeholder="Isi catatan" value={body} onChange={onBodyChangeHandler}></textarea>
+            <button type="submit">Tambah</button>
+        </form>
+    );
 }
-
-AddPage.propTypes = {
-    navigate: PropTypes.func.isRequired
-};

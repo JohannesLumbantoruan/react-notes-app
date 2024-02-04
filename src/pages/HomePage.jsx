@@ -1,73 +1,41 @@
-import React from "react";
+import { useState } from "react";
 import NoteList from "../components/NoteList";
 import NoteSearhForm from "../components/NoteSearchForm";
 import { archiveNote, deleteNote, getNotes } from "../data/notes";
 import { useSearchParams } from "react-router-dom";
-import PropTypes from 'prop-types';
 
-export default function HomePageWrapper() {
+export default function HomePage() {
+    // eslint-disable-next-line no-unused-vars
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const query = searchParams.get('query');
+    const [notes, setNotes] = useState(() => getNotes());
+    const [query, setQuery] = useState('');
 
-    const changeSearchParams = (query) => {
-        setSearchParams({ query });
-    };
-
-    return <HomePage query={query} queryChange={changeSearchParams} />
-}
-
-class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            notes: getNotes(),
-            query: props.query || ''
-        };
-
-        this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this);
-        this.onQueryChangeHandler = this.onQueryChangeHandler.bind(this);
-        this.onArchiveNoteHandler = this.onArchiveNoteHandler.bind(this);
-    }
-
-    onDeleteNoteHandler(id) {
+    const onDeleteNoteHandler = (id) => {
         deleteNote(id);
 
-        this.setState({
-            notes: getNotes(),
-            query: ''
-        });
+        setNotes(getNotes());
+        setQuery('');
     }
 
-    onQueryChangeHandler(query) {
-        this.setState({ query });
-
-        this.props.queryChange(query);
+    const onQueryChangeHandler = (query) => {
+        setQuery(query);
+        setSearchParams({ query });
     }
 
-    onArchiveNoteHandler(id) {
+    const onArchiveNoteHandler = (id) => {
         archiveNote(id);
 
-        this.setState({
-            notes: getNotes(),
-            query: ''
-        });
+        setNotes(getNotes());
+        setQuery('');
     }
 
-    render() {
-        const notes = this.state.notes.filter((note) => note.title.toLowerCase().includes(this.state.query));
+    const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(query));
 
-        return (
-            <section>
-                <NoteSearhForm searchNote={this.onQueryChangeHandler} query={this.state.query} />
-                <NoteList notes={notes} deleteNote={this.onDeleteNoteHandler} archiveNote={this.onArchiveNoteHandler} />
-            </section>
-        );
-    }
+    return (
+        <section>
+            <NoteSearhForm searchNote={onQueryChangeHandler} query={query} setQuery={setQuery} />
+            <NoteList notes={filteredNotes} deleteNote={onDeleteNoteHandler} archiveNote={onArchiveNoteHandler} />
+        </section>
+    );
 }
-
-HomePage.propTypes = {
-    query: PropTypes.string,
-    queryChange: PropTypes.func.isRequired
-};

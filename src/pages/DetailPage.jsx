@@ -1,59 +1,38 @@
-import React from "react";
+import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { archiveNote, deleteNote, getNote, unArchiveNote } from '../data/notes';
 import formatDate from "../utils/formatDate";
 import DeleteNote from "../components/DeleteNote";
 import ArchiveNote from "../components/ArchiveNote";
-import PropTypes from 'prop-types';
 
-export default function DetailPageWrapper() {
-    const { id } = useParams();
+export default function DetailPage() {
+    const noteId = Number(useParams().id);
     const navigate = useNavigate();
 
-    return <DetailPage noteId={id} navigate={navigate} />
-}
+    const [note, setNote] = useState(() => getNote(noteId));
 
-class DetailPage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            note: getNote(Number(props.noteId))
-        }
-
-        this.onDeleteHandler = this.onDeleteHandler.bind(this);
-        this.onArchiveHandler = this.onArchiveHandler.bind(this);
-    }
-
-    onArchiveHandler(id) {
-        const { note } = this.state;
-
+    const onArchiveHandler = (id) => {
         if (note.archived) {
             unArchiveNote(id);
         } else {
             archiveNote(id);
         }
 
-        this.setState({ note: getNote(Number(this.props.noteId)) });
+        setNote({ ...getNote(noteId) });
     }
 
-    onDeleteHandler(id) {
-        const { note } = this.state;
-
+    const onDeleteHandler = (id) => {
         deleteNote(id);
 
         if (note.archived) {
-            this.props.navigate('/archives');
+            navigate('/archives');
         } else {
-            this.props.navigate('/');
+            navigate('/');
         }
     }
-
-    render() {
-        const { note } = this.state;
-
-        return(
-            <div className="note-item note-detail">
+    
+    return(
+        <div className="note-item note-detail">
             <div className="note-item__content">
                 <h3 className="note-title">
                     <Link to={`/notes/${note.id}`}>{note.title}</Link>
@@ -62,15 +41,9 @@ class DetailPage extends React.Component {
                 <p className="note-body">{note.body}</p>
             </div>
             <div className="note-item__buttons">
-                <DeleteNote deleteNote={this.onDeleteHandler} id={note.id} />
-                <ArchiveNote archiveNote={this.onArchiveHandler} id={note.id} isArchive={note.archived} />
+                <DeleteNote deleteNote={onDeleteHandler} id={note.id} />
+                <ArchiveNote archiveNote={onArchiveHandler} id={note.id} isArchive={note.archived} />
             </div>
         </div>
-        )
-    }
-}
-
-DetailPage.propTypes = {
-    navigate: PropTypes.func.isRequired,
-    noteId: PropTypes.string.isRequired
+    )
 }

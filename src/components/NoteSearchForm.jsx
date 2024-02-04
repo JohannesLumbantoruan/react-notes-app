@@ -1,44 +1,29 @@
-import React from "react";
 import PropTypes from 'prop-types';
 
-export default class NoteSearhForm extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            query: ''
-        };
-
-        this.onQueryChangeHandler = this.onQueryChangeHandler.bind(this);
-        this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    }
-
-    onQueryChangeHandler(event) {
+export default function NoteSearchForm({ query, searchNote, isArchive, setQuery }) {
+    const onQueryChangeHandler = (event) => {
         const query = event.target.value.trim().toLowerCase();
-        this.setState({ query });
-
-        this.props.searchNote(query);
+        setQuery(query);
+        searchNote(query);
     }
 
-    onSubmitHandler(event) {
+    const onSubmitHandler = (event) => {
         event.preventDefault();
 
-        this.props.searchNote(this.state.query);
+        searchNote(query);
     }
 
-    render() {
-        const { isArchive } = this.props;
-
-        return (
-            <form className="note-search-form" onSubmit={this.onSubmitHandler}>
-                <input type="text" placeholder={isArchive ? 'Cari arsip catatan' : 'Cari catatan'} value={this.state.query} onChange={this.onQueryChangeHandler} />
-                <button type="submit">Cari</button>
-            </form>
-        );
-    }
+    return (
+        <form className="note-search-form" onSubmit={onSubmitHandler}>
+            <input type="text" placeholder={isArchive ? 'Cari arsip catatan' : 'Cari catatan'} value={query} onChange={onQueryChangeHandler} />
+            <button type="submit">Cari</button>
+        </form>
+    );
 }
 
-NoteSearhForm.propTypes = {
+NoteSearchForm.propTypes = {
     searchNote: PropTypes.func.isRequired,
-    isArchive: PropTypes.bool
+    isArchive: PropTypes.bool,
+    query: PropTypes.string.isRequired,
+    setQuery: PropTypes.func.isRequired
 };
