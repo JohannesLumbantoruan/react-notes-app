@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { addNote } from "../data/api";
 import { useNavigate } from "react-router-dom";
+import { LocaleContext } from '../contexts';
 
 export default function AddPage() {
     const navigate = useNavigate();
@@ -8,6 +9,8 @@ export default function AddPage() {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [totalChar, setTotalChar] = useState(50);
+
+    const { locale } = useContext(LocaleContext);
 
     const onTitleChangeHandler = (event) => {
         let title = event.target.value;
@@ -35,7 +38,19 @@ export default function AddPage() {
         });
 
         if (!error) navigate('/');
-    }    
+    }
+
+    if (locale === 'en') {
+        return (
+            <form className="note-add-form" onSubmit={onSubmitHandler}>
+                <h2>Add Note</h2>
+                <p>Characters left: {totalChar}</p>
+                <input type="text" placeholder="Note title" value={title} onChange={onTitleChangeHandler} required />
+                <textarea rows="5" placeholder="Note body" value={body} onChange={onBodyChangeHandler} required></textarea>
+                <button type="submit">Add</button>
+            </form>
+        )
+    }
 
     return (
         <form className="note-add-form" onSubmit={onSubmitHandler}>

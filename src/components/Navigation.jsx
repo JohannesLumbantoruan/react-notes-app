@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { FiLogOut } from 'react-icons/fi';
 import { FaStickyNote, FaArchive, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { LocaleContext } from "../contexts";
 
 export default function Navigation({ logout, name }) {
+    const { locale } = useContext(LocaleContext);
+
     useEffect(() => {
         if (window.innerWidth > 500) return;
         
@@ -52,7 +55,7 @@ export default function Navigation({ logout, name }) {
 
     return (
         <nav>
-            <h1>Notes App</h1>
+            <h1>{locale === 'id' ? 'Catatanku' : 'MyNotes'}</h1>
             <button id="hamburger-button" onClick={onHamburgerClick}>☰</button>
             <ul>
                 <li onClick={onCloseClick}><MdClose className="btn-close" /></li>

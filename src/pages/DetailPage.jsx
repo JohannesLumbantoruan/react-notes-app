@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { archiveNote, deleteNote, getNote, unarchiveNote } from '../data/api';
 import formatDate from "../utils/formatDate";
 import DeleteNote from "../components/DeleteNote";
 import ArchiveNote from "../components/ArchiveNote";
+import { LocaleContext } from "../contexts";
+import formatDateEn from "../utils/formatDateEn";
 
 export default function DetailPage() {
     const noteId = useParams().id;
     const navigate = useNavigate();
 
     const [note, setNote] = useState({});
+
+    const { locale } = useContext(LocaleContext);
 
     useEffect(() => {
         (async () => {
@@ -61,7 +65,7 @@ export default function DetailPage() {
         <div className="note-item note-detail">
             <div className="note-item__content">
                 <h3 className="note-title">{note.title}</h3>
-                <p className="note-date">{note.createdAt && formatDate(note.createdAt)}</p>
+                <p className="note-date">{note.createdAt && (locale === 'id' ? formatDate(note.createdAt): formatDateEn(note.createdAt))}</p>
                 <p className="note-body">{note.body}</p>
             </div>
             <div className="note-item__buttons">

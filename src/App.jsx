@@ -80,6 +80,7 @@ export default function NoteApp() {
             <ThemeContext.Provider value={themeContextValue}>
                 <LocaleContext.Provider value={localeContextValue}>
                     <div className="note-app">
+                        <ToggleButton />
                         <main>
                             <Routes>
                                 <Route path="/*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
