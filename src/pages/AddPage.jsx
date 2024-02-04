@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addNote } from "../data/notes";
+import { addNote } from "../data/api";
 import { useNavigate } from "react-router-dom";
 
 export default function AddPage() {
@@ -26,23 +26,23 @@ export default function AddPage() {
         setBody(event.target.value);
     }
 
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = async (event) => {
         event.preventDefault();
 
-        addNote({
+        const { error } = addNote({
             title,
             body
         });
 
-        navigate('/');
+        if (!error) navigate('/');
     }    
 
     return (
         <form className="note-add-form" onSubmit={onSubmitHandler}>
             <h2>Tambah Catatan</h2>
             <p>Sisa karakter: {totalChar}</p>
-            <input type="text" placeholder="Judul catatan" value={title} onChange={onTitleChangeHandler} />
-            <textarea rows="5" placeholder="Isi catatan" value={body} onChange={onBodyChangeHandler}></textarea>
+            <input type="text" placeholder="Judul catatan" value={title} onChange={onTitleChangeHandler} required />
+            <textarea rows="5" placeholder="Isi catatan" value={body} onChange={onBodyChangeHandler} required></textarea>
             <button type="submit">Tambah</button>
         </form>
     );

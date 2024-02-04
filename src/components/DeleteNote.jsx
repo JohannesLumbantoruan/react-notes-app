@@ -8,6 +8,6 @@ export default function DeleteNote({ id, deleteNote }) {
 }
 
 DeleteNote.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     deleteNote: PropTypes.func.isRequired
 };

@@ -1,21 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NoteList from "../components/NoteList";
 import NoteSearhForm from "../components/NoteSearchForm";
-import { archiveNote, deleteNote, getNotes } from "../data/notes";
 import { useSearchParams } from "react-router-dom";
+import { getActiveNotes, archiveNote, deleteNote } from "../data/api";
 
 export default function HomePage() {
     // eslint-disable-next-line no-unused-vars
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [notes, setNotes] = useState(() => getNotes());
+    const [notes, setNotes] = useState([]);
     const [query, setQuery] = useState('');
 
-    const onDeleteNoteHandler = (id) => {
-        deleteNote(id);
+    useEffect(() => {
+        (async () => {
+            const { error, data } = await getActiveNotes();
 
-        setNotes(getNotes());
-        setQuery('');
+            if (!error) {
+                setNotes(data);
+            }
+        })();
+    }, []);
+
+    const onDeleteNoteHandler = async (id) => {
+        const { error } = await deleteNote(id);
+
+        if (!error) {
+            const { error: err, data } = await getActiveNotes();
+
+            if (!err) {
+                setNotes(data);
+                setQuery('');
+            }
+        }
     }
 
     const onQueryChangeHandler = (query) => {
@@ -23,11 +39,17 @@ export default function HomePage() {
         setSearchParams({ query });
     }
 
-    const onArchiveNoteHandler = (id) => {
-        archiveNote(id);
+    const onArchiveNoteHandler = async (id) => {
+        const { error } = await archiveNote(id);
 
-        setNotes(getNotes());
-        setQuery('');
+        if (!error) {
+            const { error: err, data} = await getActiveNotes();
+
+            if (!err) {
+                setNotes(data);
+                setQuery('');
+            }
+        }
     }
 
     const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(query));

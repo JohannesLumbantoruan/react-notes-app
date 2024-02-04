@@ -1,16 +1,24 @@
-import { useState } from "react";
-import { deleteNote, getArchivedNotes, unArchiveNote } from "../data/notes";
+import { useEffect, useState } from "react";
 import NoteSearhForm from "../components/NoteSearchForm";
 import NoteList from "../components/NoteList";
 import { useSearchParams } from "react-router-dom";
+import { getArchivedNotes, deleteNote, unarchiveNote } from "../data/api";
 
 export default function ArchivesPage() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [notes, setNotes] = useState(() => getArchivedNotes());
+    const [notes, setNotes] = useState([]);
     const [query, setQuery] = useState(() => searchParams.get('query') || '');
 
-    const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(query));
+    useEffect(() => {
+        (async () => {
+            const { error, data } = await getArchivedNotes();
+
+            if (!error) {
+                setNotes(data);
+            }
+        })();
+    }, []);
 
     const onQueryChangeHandler = (query) => {
         setQuery(query);
@@ -18,20 +26,34 @@ export default function ArchivesPage() {
         setSearchParams({ query });
     }
 
-    const onDeleteNoteHandler = (id) => {
-        deleteNote(id);
+    const onDeleteNoteHandler = async (id) => {
+        const { error } = await deleteNote(id);
 
-        setNotes(() => getArchivedNotes());
-        setQuery('');
+        if (!error) {
+            const { error: err, data } = await getArchivedNotes();
+1
+            if (!err) {
+                setNotes(data);
+                setQuery('');
+            }
+        }
     }
 
-    const onArchiveNoteHandler = (id) => {
-        unArchiveNote(id);
+    const onArchiveNoteHandler = async (id) => {
+        const { error } = await unarchiveNote(id);
 
-        setNotes(() => getArchivedNotes());
-        setQuery('');
+        if (!error) {
+            const { error: err, data } = await getArchivedNotes();
+
+            if (!err) {
+                setNotes(data);
+                setQuery('');
+            }
+        }
     }
 
+    const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(query));
+    
     return (
         <section>
             <NoteSearhForm searchNote={onQueryChangeHandler} query={query} isArchive={true} setQuery={setQuery} />
