@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import NoteSearhForm from "../components/NoteSearchForm";
-import NoteList from "../components/NoteList";
-import { useSearchParams } from "react-router-dom";
-import { getArchivedNotes, deleteNote, unarchiveNote } from "../data/api";
+import { useEffect, useState } from 'react';
+import NoteSearhForm from '../components/NoteSearchForm';
+import NoteList from '../components/NoteList';
+import { useSearchParams } from 'react-router-dom';
+import { getArchivedNotes, deleteNote, unarchiveNote } from '../data/api';
+import PropTypes from 'prop-types';
 
-export default function ArchivesPage() {
+export default function ArchivesPage({ setLoading }) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [notes, setNotes] = useState([]);
@@ -12,13 +13,16 @@ export default function ArchivesPage() {
 
     useEffect(() => {
         (async () => {
+            setLoading(true);
+
             const { error, data } = await getArchivedNotes();
 
             if (!error) {
                 setNotes(data);
+                setLoading(false);
             }
         })();
-    }, []);
+    }, [setLoading]);
 
     const onQueryChangeHandler = (query) => {
         setQuery(query);
@@ -61,3 +65,7 @@ export default function ArchivesPage() {
         </section>
     );  
 }
+
+ArchivesPage.propTypes = {
+    setLoading: PropTypes.func.isRequired
+};

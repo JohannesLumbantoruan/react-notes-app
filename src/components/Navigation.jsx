@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FiLogOut } from 'react-icons/fi';
 import { FaStickyNote, FaArchive, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
-import { useContext, useEffect } from "react";
-import { LocaleContext } from "../contexts";
+import { useContext, useEffect } from 'react';
+import { LocaleContext } from '../contexts';
 
 export default function Navigation({ logout, name }) {
     const { locale } = useContext(LocaleContext);

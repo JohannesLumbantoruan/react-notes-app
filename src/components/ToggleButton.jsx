@@ -1,6 +1,6 @@
 import { FiSun, FiMoon } from 'react-icons/fi'
-import { useContext } from "react";
-import { ThemeContext, LocaleContext } from "../contexts";
+import { useContext } from 'react';
+import { ThemeContext, LocaleContext } from '../contexts';
 
 export default function ToggleButton() {
     const { theme, toggleTheme } = useContext(ThemeContext);

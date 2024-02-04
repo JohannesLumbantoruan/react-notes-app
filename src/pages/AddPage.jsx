@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
-import { addNote } from "../data/api";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from 'react';
+import { addNote } from '../data/api';
+import { useNavigate } from 'react-router-dom';
 import { LocaleContext } from '../contexts';
+import PropTypes from 'prop-types';
 
-export default function AddPage() {
+export default function AddPage({ setLoading }) {
     const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
@@ -31,13 +32,17 @@ export default function AddPage() {
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
+        setLoading(true);
 
         const { error } = addNote({
             title,
             body
         });
 
-        if (!error) navigate('/');
+        if (!error) {
+            setLoading(false);
+            navigate('/');
+        }
     }
 
     if (locale === 'en') {
@@ -62,3 +67,7 @@ export default function AddPage() {
         </form>
     );
 }
+
+AddPage.propTypes = {
+    setLoading: PropTypes.func.isRequired
+};

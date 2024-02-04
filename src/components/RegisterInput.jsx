@@ -1,8 +1,8 @@
-import { useNavigate, Link } from "react-router-dom";
-import useInput from "../hooks/useInput";
-import { register } from "../data/api";
-import { useContext, useState } from "react";
-import { LocaleContext } from "../contexts";
+import { useNavigate, Link } from 'react-router-dom';
+import useInput from '../hooks/useInput';
+import { register } from '../data/api';
+import { useContext, useState } from 'react';
+import { LocaleContext } from '../contexts';
 
 export default function RegisterInput() {
     const [name, onNameChangeHandler] = useInput('');

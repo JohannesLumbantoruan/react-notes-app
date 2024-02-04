@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import formatDate from "../utils/formatDate";
-import ArchiveNote from "./ArchiveNote";
-import DeleteNote from "./DeleteNote";
+import { Link } from 'react-router-dom';
+import formatDate from '../utils/formatDate';
+import ArchiveNote from './ArchiveNote';
+import DeleteNote from './DeleteNote';
 import PropTypes from 'prop-types';
-import { useContext } from "react";
-import { LocaleContext } from "../contexts";
-import formatDateEn from "../utils/formatDateEn";
+import { useContext } from 'react';
+import { LocaleContext } from '../contexts';
+import formatDateEn from '../utils/formatDateEn';
 
 export default function NoteItem({ note, deleteNote, archiveNote, isArchive }) {
     const { locale } = useContext(LocaleContext);

@@ -1,22 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import ArchivesPage from "./pages/ArchivesPage";
-import Navigation from "./components/Navigation";
-import AddPage from "./pages/AddPage";
-import DetailPage from "./pages/DetailPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import { useEffect, useMemo, useState } from "react";
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
-import { getUserLogged, putAccessToken } from "./data/api";
-import { ThemeContext, LocaleContext } from "./contexts";
-import ToggleButton from "./components/ToggleButton";
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ArchivesPage from './pages/ArchivesPage';
+import Navigation from './components/Navigation';
+import AddPage from './pages/AddPage';
+import DetailPage from './pages/DetailPage';
+import NotFoundPage from './pages/NotFoundPage';
+import { useEffect, useMemo, useState } from 'react';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import { getUserLogged, putAccessToken } from './data/api';
+import { ThemeContext, LocaleContext } from './contexts';
+import ToggleButton from './components/ToggleButton';
 
 export default function NoteApp() {
     const [authedUser, setAuthedUser] = useState(null);
     const [initializing, setInitializing] = useState(true);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
     const [locale, setLocale] = useState(localStorage.getItem('locale') || 'id');
+    const [loading, setLoading] = useState(false);
 
     const themeContextValue = useMemo(() => ({
         theme,
@@ -96,6 +97,7 @@ export default function NoteApp() {
     return (
         <ThemeContext.Provider value={themeContextValue}>
             <LocaleContext.Provider value={localeContextValue}>
+                {loading && <div className="spinner"></div>}
                 <div className="note-app">
                     <ToggleButton />
                     <header>
@@ -103,10 +105,10 @@ export default function NoteApp() {
                     </header>
                     <main>
                         <Routes>
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/archives" element={<ArchivesPage />} />
-                            <Route path="/notes/add" element={<AddPage />} />
-                            <Route path="/notes/:id" element={<DetailPage />} />
+                            <Route path="/" element={<HomePage setLoading={setLoading} />} />
+                            <Route path="/archives" element={<ArchivesPage setLoading={setLoading} />} />
+                            <Route path="/notes/add" element={<AddPage setLoading={setLoading} />} />
+                            <Route path="/notes/:id" element={<DetailPage setLoading={setLoading} />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </main>

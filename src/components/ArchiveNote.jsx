@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { RiInboxUnarchiveLine, RiInboxArchiveLine } from "react-icons/ri";
+import { RiInboxUnarchiveLine, RiInboxArchiveLine } from 'react-icons/ri';
 
 export default function ArchiveNote({ id, archiveNote, isArchive }) {
     return (

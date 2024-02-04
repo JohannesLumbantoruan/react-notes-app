@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { archiveNote, deleteNote, getNote, unarchiveNote } from '../data/api';
-import formatDate from "../utils/formatDate";
-import DeleteNote from "../components/DeleteNote";
-import ArchiveNote from "../components/ArchiveNote";
-import { LocaleContext } from "../contexts";
-import formatDateEn from "../utils/formatDateEn";
+import formatDate from '../utils/formatDate';
+import DeleteNote from '../components/DeleteNote';
+import ArchiveNote from '../components/ArchiveNote';
+import { LocaleContext } from '../contexts';
+import formatDateEn from '../utils/formatDateEn';
+import PropTypes from 'prop-types';
 
-export default function DetailPage() {
+export default function DetailPage({ setLoading }) {
     const noteId = useParams().id;
     const navigate = useNavigate();
 
@@ -17,13 +18,15 @@ export default function DetailPage() {
 
     useEffect(() => {
         (async () => {
+            setLoading(true);
             const { error, data } = await getNote(noteId);
 
             if (!error) {
                 setNote({ ...data });
+                setLoading(false);
             }
         })();
-    }, [noteId]);
+    }, [noteId, setLoading]);
 
     const onArchiveHandler = async (id) => {
         if (note.archived) {
@@ -75,3 +78,7 @@ export default function DetailPage() {
         </div>
     )
 }
+
+DetailPage.propTypes = {
+    setLoading: PropTypes.func.isRequired
+};
